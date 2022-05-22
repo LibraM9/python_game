@@ -1,3 +1,8 @@
+# -*- coding: utf-8 -*-
+# @Time    : 2022/5/21 10:08
+# @Author  : Li Meng
+# @File    : 原始代码.py
+# @Desc    :
 import pygame as py
 import sys
 import random
@@ -6,12 +11,6 @@ from pygame.locals import *
 # ===========================================================
 # ========================前期准备===========================
 py.init()
-py.mixer.init()
-src_path = "./src/"
-
-
-py.mixer.music.load(src_path + "music.mp3")  # 播放音乐
-py.mixer.music.play(-1)
 
 
 # 注：游戏需要的所有文件（图片等）都放在同游戏目录的"Files"目录下。
@@ -31,18 +30,18 @@ screen = py.display.set_mode((1000, 650))
 
 
 # ===========================================================
-# =========================知识库内==========================
+# =========================图书馆内==========================
 
 def knowledge(selection):
-    path = src_path + '/inside_library/knowledge' + str(selection) + '.png'
+    path = 'Files\\inside_liberary\\knowledge' + str(selection) + '.jpg'
     know = py.image.load(path)
     know = py.transform.smoothscale(know, (1000, 650))
     screen.blit(know, (0, 0))
-    exits = py.image.load(src_path + '/inside_library/exit.png')
+    exits = py.image.load('Files\\inside_liberary\\back.png')
     exits = py.transform.smoothscale(exits, (72, 72))
     exit_button = screen.blit(exits, (918, 570))
     exit_button = Button(exit_button)
-    py.display.flip()  # 更新图像到窗口
+    py.display.flip()
     # 进入事件循环
     while True:
         for event in py.event.get():
@@ -59,34 +58,39 @@ def knowledge(selection):
 
 
 def inside_Liberary():
-    ilib = py.image.load(src_path + '/inside_library/Inside.png')
+    ilib = py.image.load('Files\\inside_liberary\\Inside.jpg')
     ilib = py.transform.smoothscale(ilib, (1000, 650))
-    screen.blit(ilib, (0, 0))  # 设置未知
-    # 退出知识库的按钮
-    exits = py.image.load(src_path + '/inside_library/exit.png')
-    exits = py.transform.smoothscale(exits, (60, 60))
+    screen.blit(ilib, (0, 0))
+    # 退出图书馆的按钮
+    exits = py.image.load('Files\\inside_liberary\\exit.png')
+    exits = py.transform.smoothscale(exits, (72, 81))
     exit_button = screen.blit(exits, (5, 560))
     exit_button = Button(exit_button)
-    # 常规能源按钮
-    rubbish1 = py.image.load(src_path + '/playground/' + str(0) + '.png')
-    rubbish1 = py.transform.smoothscale(rubbish1, (200, 200))
-    rubbish1_button = screen.blit(rubbish1, (50, 170))
+    # 厨余垃圾按钮
+    rubbish1 = py.image.load('Files\\inside_liberary\\rubbish1.png')
+    rubbish1 = py.transform.smoothscale(rubbish1, (150, 298))
+    rubbish1_button = screen.blit(rubbish1, (80, 150))
     rubbish1_button = Button(rubbish1_button)
-    # 新能源按钮
-    rubbish2 = py.image.load(src_path + '/playground/' + str(1) + '.png')
-    rubbish2 = py.transform.smoothscale(rubbish2, (200, 200))
-    rubbish2_button = screen.blit(rubbish2, (280, 170))
+    # 可回收垃圾按钮
+    rubbish2 = py.image.load('Files\\inside_liberary\\rubbish2.png')
+    rubbish2 = py.transform.smoothscale(rubbish2, (150, 298))
+    rubbish2_button = screen.blit(rubbish2, (310, 150))
     rubbish2_button = Button(rubbish2_button)
-    # 可再生能源按钮
-    rubbish3 = py.image.load(src_path + '/playground/' + str(2) + '.png')
-    rubbish3 = py.transform.smoothscale(rubbish3, (200, 200))
-    rubbish3_button = screen.blit(rubbish3, (510, 170))
+    # 有害垃圾按钮
+    rubbish3 = py.image.load('Files\\inside_liberary\\rubbish3.png')
+    rubbish3 = py.transform.smoothscale(rubbish3, (150, 298))
+    rubbish3_button = screen.blit(rubbish3, (540, 150))
     rubbish3_button = Button(rubbish3_button)
-    # 不可再生能源按钮
-    rubbish4 = py.image.load(src_path + '/playground/' + str(3) + '.png')
-    rubbish4 = py.transform.smoothscale(rubbish4, (200, 200))
-    rubbish4_button = screen.blit(rubbish4, (740, 170))
+    # 不可回收垃圾按钮
+    rubbish4 = py.image.load('Files\\inside_liberary\\rubbish4.png')
+    rubbish4 = py.transform.smoothscale(rubbish4, (150, 298))
+    rubbish4_button = screen.blit(rubbish4, (770, 150))
     rubbish4_button = Button(rubbish4_button)
+    # 图鉴按钮
+    rubbish5 = py.image.load('Files\\inside_liberary\\rubbish5.png')
+    rubbish5 = py.transform.smoothscale(rubbish5, (82, 72))
+    rubbish5_button = screen.blit(rubbish5, (903, 560))
+    rubbish5_button = Button(rubbish5_button)
 
     py.display.flip()
     selection = -1
@@ -97,25 +101,29 @@ def inside_Liberary():
                 sys.exit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = py.mouse.get_pos()
-                # 点击离开知识库
+                # 点击离开图书馆
                 if exit_button.has(pos):
                     selection = 0
                     break
-                # 点击化石能源
+                # 点击厨余垃圾
                 if rubbish1_button.has(pos):
                     selection = 1
                     break
-                # 点击新能源
+                # 点击可回收垃圾
                 if rubbish2_button.has(pos):
                     selection = 2
                     break
-                # 点击化石能源
+                # 点击有害垃圾
                 if rubbish3_button.has(pos):
                     selection = 3
                     break
-                # 点击新能源
+                # 点击不可回收垃圾
                 if rubbish4_button.has(pos):
                     selection = 4
+                    break
+                # 点击图鉴
+                if rubbish5_button.has(pos):
+                    selection = 5
                     break
         if selection != -1:
             break
@@ -125,21 +133,21 @@ def inside_Liberary():
 
 
 # ===========================================================
-# =========================知识库外==========================
+# =========================图书馆外==========================
 
 def outside_Liberary():
-    olib = py.image.load(src_path + '/outside_library/Outside.png')
+    olib = py.image.load('Files\\outside_liberary\\Outside.jpg')
     olib = py.transform.smoothscale(olib, (1000, 650))
     screen.blit(olib, (0, 0))
-    # 进入知识库的按钮
-    enter = py.image.load(src_path + '/outside_library/enter_lib.png')
-    enter = py.transform.smoothscale(enter, (100, 100))
-    enter_button = screen.blit(enter, (450, 500))
+    # 进入图书馆的按钮
+    enter = py.image.load('Files\\outside_liberary\\enter_lib.png')
+    enter = py.transform.smoothscale(enter, (72, 72))
+    enter_button = screen.blit(enter, (470, 550))
     enter_button = Button(enter_button)
-    # 退出知识库的按钮
-    exits = py.image.load(src_path + '/outside_library/playground.png')
-    exits = py.transform.smoothscale(exits, (60, 60))
-    exit_button = screen.blit(exits, (15, 580))
+    # 退出图书馆的按钮
+    exits = py.image.load('Files\\outside_liberary\\playground.png')
+    exits = py.transform.smoothscale(exits, (72, 51))
+    exit_button = screen.blit(exits, (5, 590))
     exit_button = Button(exit_button)
     py.display.flip()
     selection = -1
@@ -154,7 +162,7 @@ def outside_Liberary():
                 if exit_button.has(pos):
                     selection = 0
                     break
-                # 点击进入知识库
+                # 点击进入图书馆
                 if enter_button.has(pos):
                     selection = 1
                     break
@@ -169,12 +177,12 @@ def outside_Liberary():
 # ==========================游戏帮助=========================
 
 def help_page():
-    background = py.image.load(src_path + '/help/background.png')
+    background = py.image.load('Files\\help\\background.jpg')
     background = py.transform.smoothscale(background, (1000, 650))
     screen.blit(background, (0, 0))
     # 返回按钮
-    exits = py.image.load(src_path + '/help/back.png')
-    exits = py.transform.smoothscale(exits, (60, 60))
+    exits = py.image.load('Files\\help\\back.png')
+    exits = py.transform.smoothscale(exits, (72, 57))
     exit_button = screen.blit(exits, (5, 585))
     exit_button = Button(exit_button)
     py.display.flip()
@@ -196,10 +204,10 @@ def help_page():
 # ==========================游戏结束=========================
 
 def game_over(result):
-    path = src_path + '/game_over/result' + str(result) + '.png'
-    result = py.image.load(path)
-    result = py.transform.smoothscale(result, (1300, 650))
-    screen.blit(result, (-120, 0))
+    path = 'Files\\game_over\\result' + str(result) + '.png'
+    background = py.image.load(path)
+    background = py.transform.smoothscale(background, (1000, 650))
+    screen.blit(background, (0, 0))
     py.display.flip()
     temp = 0
     while True:
@@ -216,18 +224,13 @@ def game_over(result):
 # ===========================================================
 # ==========================操场环节=========================
 
-choices = ['031', '032', '033', '121', '122', '021', '022'] # 待分类的能源
+choices = ['01', '02', '11', '12', '21', '22', '31']
 
 
 class Rubbish():
     def __init__(self, sort):
-        """
-        读取垃圾图片，并设置在随机地点
-        :param sort:
-        """
-        self.sort = sort # 编号
-        self.img = py.image.load(src_path + '/playground/' + sort + '.png')
-        self.img = py.transform.smoothscale(self.img, (100, 100))  # 分类图标大小
+        self.sort = sort
+        self.img = py.image.load('Files\\playground\\' + sort + '.png')
         x = random.randint(100, 1400)
         y = random.randint(110, 900)
         self.position = self.img.get_rect()
@@ -237,14 +240,14 @@ class Rubbish():
 
 class Role():
     def __init__(self, role):
-        self.r_side = py.image.load(src_path + '/playground/' + role + '1.png')
-        self.r_walk = py.image.load(src_path + '/playground/' + role + '2.png')
+        self.r_side = py.image.load('Files\\playground\\' + role + '1.png')
+        self.r_walk = py.image.load('Files\\playground\\' + role + '2.png')
         self.l_side = py.transform.flip(self.r_side, True, False)
         self.l_walk = py.transform.flip(self.r_walk, True, False)
         self.img = self.r_side
         self.position = self.img.get_rect()
         screen.blit(self.img, self.position)
-        self.rubbish = None # 捡的垃圾
+        self.rubbish = None
 
     def move(self, key):
         if key == K_UP:
@@ -275,30 +278,26 @@ class Role():
 
 class Trash_can():
     def __init__(self, num):
-        """
-        读取分类图片，num为第n类，暂定4类
-        :param num:
-        """
         self.num = num
-        self.img = py.image.load(src_path + '/playground/' + str(num) + '.png')
-        self.img = py.transform.smoothscale(self.img, (120, 120))  # 分类图标大小
+        self.img = py.image.load('Files\\playground\\' + str(num) + '.png')
+        self.img = py.transform.smoothscale(self.img, (100, 92))
         self.position = self.img.get_rect()
-        self.position = self.position.move((100 + num * 170, 0))
+        self.position = self.position.move((100 + num * 200, 0))
         screen.blit(self.img, self.position)
 
+
 def playground(selection):
-    background = py.image.load(src_path + '/playground/Playground.jpeg')
-    background = py.transform.smoothscale(background, (1920, 1080))
+    background = py.image.load('Files\\playground\\Playground.jpg')
     screen.blit(background, [0, 0])
-    lib = py.image.load(src_path + '/playground/library.png')
-    # lib = py.transform.smoothscale(lib, (78, 72))
+    lib = py.image.load('Files\\playground\\liberary.png')
+    lib = py.transform.smoothscale(lib, (78, 72))
     lib_button = screen.blit(lib, (900, 10))
     lib_button = Button(lib_button)
     trash_can = []
-    for num in range(0, 4):  # 分类数量，将分类
+    for num in range(0, 4):
         trash_can.append(Trash_can(num))
-    role = Role(selection) # 人物选择
-    rubbish = [] # 存放垃圾对象（垃圾及位置），sort为编号
+    role = Role(selection)
+    rubbish = []
     for sort in choices:
         rubbish.append(Rubbish(sort))
     py.display.flip()
@@ -312,7 +311,7 @@ def playground(selection):
                 sys.exit()
             if event.type == MOUSEBUTTONDOWN:
                 pos = py.mouse.get_pos()
-                if lib_button.has(pos): # 进入知识库
+                if lib_button.has(pos):
                     outside_Liberary()
             if event.type == KEYDOWN and \
                     event.key in (K_UP, K_DOWN, K_RIGHT, K_LEFT):
@@ -328,15 +327,13 @@ def playground(selection):
                 elif event.key == K_LEFT:
                     role.img = role.l_side
                 down = 0
-        take = role.position.collidelist([each.position for each in rubbish]) # 存入垃圾位置
+        take = role.position.collidelist([each.position for each in rubbish])
         if take >= 0 and not role.rubbish:
-            role.rubbish = (rubbish[take].sort[0],rubbish[take].sort[1]) # 如"031"，则存储(0,1)
-            del rubbish[take] # 捡起能源后，从界面中清除指定能源
-        put = role.position.collidelist([each.position for each in trash_can]) # 能源箱位置
+            role.rubbish = rubbish[take].sort[0]
+            del rubbish[take]
+        put = role.position.collidelist([each.position for each in trash_can])
         if put >= 0 and role.rubbish:
-            # 一个能源分属2类，放入任何一个正确类别均可，trash_can为能源箱
-            if role.rubbish[0] == str(trash_can[put].num) or role.rubbish[1] == str(trash_can[put].num):
-
+            if role.rubbish == str(trash_can[put].num):
                 role.rubbish = None
                 if not len(rubbish):
                     game_over(1)
@@ -371,7 +368,7 @@ def playground(selection):
                         role.position.bottom - moved[1] <= 650:
                     role.position = role.position.move([-i for i in moved])
         screen.blit(background, move_bg)
-        lib = py.image.load(src_path + '/playground/library.png')
+        lib = py.image.load('Files\\playground\\liberary.png')
         lib = py.transform.smoothscale(lib, (78, 72))
         lib_button = screen.blit(lib, (900, 10))
         lib_button = Button(lib_button)
@@ -387,16 +384,16 @@ def playground(selection):
 # ==========================选择人物=========================
 
 def choose_role():
-    background = py.image.load(src_path + '/choose_player/background.png')
+    background = py.image.load('Files\\choose_player\\background.jpg')
     background = py.transform.smoothscale(background, (1000, 650))
     screen.blit(background, (0, 0))
-    man = py.image.load(src_path + '/choose_player/man.png')
-    man = py.transform.smoothscale(man, (150, 243))
-    man_button = screen.blit(man, (280, 220))
+    man = py.image.load('Files\\choose_player\\man.png')
+    man = py.transform.smoothscale(man, (123, 325))
+    man_button = screen.blit(man, (200, 200))
     man_button = Button(man_button)
-    woman = py.image.load(src_path + '/choose_player/woman.png')
-    woman = py.transform.smoothscale(woman, (150, 243))
-    woman_button = screen.blit(woman, (560, 220))
+    woman = py.image.load('Files\\choose_player\\woman.png')
+    woman = py.transform.smoothscale(woman, (113, 325))
+    woman_button = screen.blit(woman, (687, 200))
     woman_button = Button(woman_button)
     py.display.flip()
     while True:
@@ -415,20 +412,20 @@ def choose_role():
 # ========================开始游戏界面========================
 
 def start():
-    background = py.image.load(src_path + '/start/background.png')
-    background = py.transform.smoothscale(background, (1000, 650))  # 缩放到任意大小
-    screen.blit(background, (0, 0))  # 设置位置
-    start_game = py.image.load(src_path + '/start/start_game.png')
-    start_game = py.transform.smoothscale(start_game, (300, 128))
-    start_button = screen.blit(start_game, (80, 330))
+    background = py.image.load('Files\\start\\background.jpg')
+    background = py.transform.smoothscale(background, (1000, 650))
+    screen.blit(background, (0, 0))
+    start_game = py.image.load('Files\\start\\start_game.png')
+    start_game = py.transform.smoothscale(start_game, (140, 149))
+    start_button = screen.blit(start_game, (150, 330))
     start_button = Button(start_button)
-    game_help = py.image.load(src_path + '/start/game_help.png')
-    game_help = py.transform.smoothscale(game_help, (300, 128))
-    help_button = screen.blit(game_help, (370, 330))
+    game_help = py.image.load('Files\\start\\game_help.png')
+    game_help = py.transform.smoothscale(game_help, (280, 182))
+    help_button = screen.blit(game_help, (380, 320))
     help_button = Button(help_button)
-    quit_game = py.image.load(src_path + '/start/quit_game.png')
-    quit_game = py.transform.smoothscale(quit_game, (300, 128))
-    quit_button = screen.blit(quit_game, (660, 330))
+    quit_game = py.image.load('Files\\start\\quit_game.png')
+    quit_game = py.transform.smoothscale(quit_game, (200, 160))
+    quit_button = screen.blit(quit_game, (680, 330))
     quit_button = Button(quit_button)
     py.display.flip()
     while True:
@@ -447,9 +444,7 @@ def start():
                 elif quit_button.has(pos):
                     sys.exit()
         break
-    # start()
+    start()
 
 
-if __name__ == '__main__':
-    while True:
-        start()
+start()
